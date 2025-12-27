@@ -25,6 +25,26 @@ A robust, simple e-commerce system built with **Laravel 12**, **Inertia.js (Reac
 
 ---
 
+**Install Dependencies:**
+
+
+   composer install
+   npm install && npm run build
+
+
+**Run Migrations:**
+
+
+   php artisan migrate
+
+
+**nvironment Configuration:**
+
+
+   cp .env.example .env
+   php artisan key:generate
+
+
 ## 🛠 Tech Stack
 
 - **Backend:** Laravel 12
@@ -51,4 +71,4 @@ You don't have to wait until midnight to see it work. Run the command manually:
 
 Bash
 
-php artisan report:daily-sales
+   php artisan report:daily-sales
