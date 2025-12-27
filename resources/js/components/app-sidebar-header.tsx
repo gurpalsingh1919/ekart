@@ -1,17 +1,43 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import { Separator } from '@/components/ui/separator';
+import { type BreadcrumbItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { CartSheet } from '@/components/cart-sheet';
+import { route } from 'ziggy-js';
+export function AppSidebarHeader({ breadcrumbs }: { breadcrumbs: BreadcrumbItem[] }) {
+    const { auth } = usePage().props as any;
 
-export function AppSidebarHeader({
-    breadcrumbs = [],
-}: {
-    breadcrumbs?: BreadcrumbItemType[];
-}) {
     return (
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b border-sidebar-border/50 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
+        <header className="flex h-16 shrink-0 items-center justify-between border-b px-4 bg-white">
+            {/* Left Side: Sidebar Toggle & Breadcrumbs */}
+
             <div className="flex items-center gap-2">
                 <SidebarTrigger className="-ml-1" />
+                <Separator orientation="vertical" className="mr-2 h-4" />
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
+                <div className="text-left font-bold">eKart</div>
+            </div>
+
+            {/* Right Side: Auth Links & Cart */}
+
+            <div className="flex items-center gap-4">
+                {auth.user ? (
+                    <Link href="/dashboard" className="text-sm font-medium hover:text-indigo-600 transition-colors">
+                        Dashboard
+                    </Link>
+                ) : (
+                    <div className="flex items-center gap-3">
+                        <Link href="/login" className="text-sm font-medium">Login</Link>
+                        <Link href="/register" className="text-sm font-medium border px-4 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+                            Register
+                        </Link>
+                    </div>
+                )}
+                
+                <Separator orientation="vertical" className="h-6 mx-1" />
+                
+                <CartSheet />
             </div>
         </header>
     );
