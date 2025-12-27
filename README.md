@@ -25,24 +25,25 @@ A robust, simple e-commerce system built with **Laravel 12**, **Inertia.js (Reac
 
 ---
 
-**Install Dependencies:**
+Install Dependencies:
 
+   ```Bash
 
    composer install
    npm install && npm run build
+   Environment Configuration:
 
-
-**Run Migrations:**
-
-
-   php artisan migrate
-
-
-**nvironment Configuration:**
-
+   ```Bash
 
    cp .env.example .env
    php artisan key:generate
+   Note: Ensure your .env has the correct database credentials.
+   
+**Run Migrations:**
+
+   ```Bash
+
+    php artisan migrate
 
 
 ## 🛠 Tech Stack
@@ -63,7 +64,7 @@ A robust, simple e-commerce system built with **Laravel 12**, **Inertia.js (Reac
    git clone https://github.com/gurpalsingh1919/ekart.git
 
 
-
+   Bash
 
 **Testing Daily Sales Report:**
 
