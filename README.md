@@ -1,75 +1,101 @@
-# Simple E-Commerce Shopping Cart (eKart)
+```markdown
+# 🛒 eKart: Simple E-commerce Shopping Cart
 
-A robust, simple e-commerce system built with **Laravel 12**, **Inertia.js (React)**, and **Tailwind CSS**. This project focuses on backend-driven cart management, real-time inventory monitoring, and automated administrative reporting.
+A robust, backend-driven shopping cart system built with **Laravel 12**, **Inertia.js (React)**, and **Tailwind CSS**. This project demonstrates database-persistent cart management, automated stock monitoring, and scheduled administrative reporting.
 
----
 
-## 🚀 Features
-
-### **1. Shopping Experience**
-- **Product Browsing:** Clean, responsive UI for viewing products.
-- **Persistent Cart:** Cart items are linked to the **Authenticated User model** via the database (not session-based), ensuring a seamless experience across devices.
-- **Dynamic Cart Sheet:** A slide-over cart built with React to update quantities or remove items without page reloads.
-
-### **2. User Interface**
-- **Contextual Layout:** The application utilizes a "Dashboard-only" sidebar. The shop view is full-width for better focus, while the sidebar only appears when a user is in the management/dashboard area.
-- **Flash Notifications:** Real-time feedback using `Sonner` (Toaster) for cart actions and checkout success.
-
-### **3. Inventory & Order Management**
-- **Orders & Items:** Database-driven order tracking with a `One-to-Many` relationship between Orders and OrderItems.
-- **Atomic Transactions:** Checkout logic ensures stock reduction and cart clearing happen as a single database transaction.
-
-### **4. Automated Background Tasks**
-- **Low Stock Notifications:** A **Laravel Observer** monitors product stock. When a product hits a threshold (≤ 5), a **Queued Job** is dispatched to email a dummy admin.
-- **Daily Sales Report:** A **Scheduled Artisan Command** runs every evening to compile a summary of all items sold that day and email it to the admin.
 
 ---
 
-Install Dependencies:
+## 🚀 Key Requirements Met
 
-   ```Bash
+### **1. Authenticated Shopping Cart**
+- Every cart is associated with the **Authenticated User model**.
+- Cart actions (Add, Update, Remove) are stored in the database, ensuring persistence across sessions and devices.
+- Uses Laravel's built-in authentication for secure access.
 
-   composer install
-   npm install && npm run build
-   Environment Configuration:
+### **2. Low Stock Notification (Queued Job)**
+- **Trigger:** A `ProductObserver` watches for stock changes.
+- **Action:** When a product's stock hits **5 or less**, a `SendLowStockEmail` job is dispatched.
+- **Queue:** The email is processed asynchronously via a Laravel Queue to keep the user experience fast.
 
-   ```Bash
+### **3. Daily Sales Report (Scheduled Task)**
+- **Automation:** A scheduled job runs every evening (via Cron).
+- **Function:** Scans the `order_items` table for the day's sales and sends a summary report (total products sold and total revenue) to a dummy admin email.
 
-   cp .env.example .env
-   php artisan key:generate
-   Note: Ensure your .env has the correct database credentials.
-   
-**Run Migrations:**
-
-   ```Bash
-
-    php artisan migrate
-
+---
 
 ## 🛠 Tech Stack
 
 - **Backend:** Laravel 12
-- **Frontend:** React (via Laravel Starter Kit / Inertia.js)
-- **Styling:** Tailwind CSS & Shadcn/UI
-- **Database:** MySQL
-- **Environment:** Laravel Herd (MacOS)
-- **Tooling:** Ziggy (for Laravel routes in JS), Sonner (Toaster)
+- **Frontend:** React (Inertia.js)
+- **Styling:** Tailwind CSS
+- **Database:** MySQL (via Laravel Herd)
+- **Notifications:** Laravel Mail & Queues
 
 ---
 
-## 📂 Installation
+## 📂 Installation & Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/gurpalsingh1919/ekart.git
+Follow these steps to get the project running locally:
 
+### 1. Clone and Install
+```bash
+git clone [https://github.com/gurpalsingh1919/ekart.git]
+cd ekart
+composer install
+npm install
 
-   Bash
+```
 
-**Testing Daily Sales Report:**
+### 2. Environment Configuration
 
-You don't have to wait until midnight to see it work. Run the command manually:
+```bash
+cp .env.example .env
+php artisan key:generate
 
-Bash
+```
 
-   php artisan report:daily-sales
+*Make sure to update your `.env` file with your database name and credentials.*
+
+### 3. Database Migration
+
+```bash
+php artisan migrate
+
+```
+
+### 4. Running the Application
+
+You will need two terminal windows open:
+
+```bash
+# Terminal 1: Start the Laravel server
+php artisan serve
+
+# Terminal 2: Compile frontend assets
+npm run dev
+
+```
+
+---
+
+## ⚙️ Background Workers
+
+### **Processing Emails (Queue)**
+
+To handle the Low Stock notifications, you must run the queue worker:
+
+```bash
+php artisan queue:work
+
+```
+
+### **Testing the Daily Report**
+
+To trigger the Daily Sales Report immediately (without waiting for the scheduled time), use:
+
+```bash
+php artisan report:daily-sales
+
+```
