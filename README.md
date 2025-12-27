@@ -1,6 +1,6 @@
 # Simple E-Commerce Shopping Cart (eKart)
 
-A robust, simple e-commerce system built with **Laravel 11**, **Inertia.js (React)**, and **Tailwind CSS**. This project focuses on backend-driven cart management, real-time inventory monitoring, and automated administrative reporting.
+A robust, simple e-commerce system built with **Laravel 12**, **Inertia.js (React)**, and **Tailwind CSS**. This project focuses on backend-driven cart management, real-time inventory monitoring, and automated administrative reporting.
 
 ---
 
@@ -40,5 +40,15 @@ A robust, simple e-commerce system built with **Laravel 11**, **Inertia.js (Reac
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-   cd your-repo-name
+   git clone https://github.com/gurpalsingh1919/ekart.git
+
+
+
+
+**Testing Daily Sales Report:**
+
+You don't have to wait until midnight to see it work. Run the command manually:
+
+Bash
+
+php artisan report:daily-sales
